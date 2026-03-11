@@ -406,3 +406,44 @@ Para la tarea, usted debe construir una aplicación web y desplegarla en AWS usa
 
 
 ![Image 14-1](img/image_p14_1.png)
+## Rúbrica de Evaluación del Proyecto
+
+| General Information | Detail |
+| :--- | :--- |
+| **Programmer's Name** | |
+| **Repository Link on GitHub** | |
+| **Reviewer’s Name** | |
+| **Review Date** | |
+
+| Deliverables | Reference | Evaluation |
+| :--- | :---: | :---: |
+| Deployed on GitHub | 1 | 1 |
+| Complete .gitignore file | 1 | 1 |
+| Has README.md | 1 | 1 |
+| Contains no unnecessary files or folders | 1 | 1 |
+| Has a POM.xml | 1 | 1 |
+| Respects Maven structure | 1 | 1 |
+| Does not contain the target folder | 1 | 1 |
+| **Subtotal Deliverables** | **7** | **7** |
+
+| Design and Architecture | Reference | Evaluation |
+| :--- | :---: | :---: |
+| The framework supports concurrent requests, improving upon the previous version. | 5 | 5 |
+| The framework shuts down gracefully using a Runtime Hook activated in a thread (see: [jvm-shutdown-hooks](https://www.baeldung.com/jvm-shutdown-hooks)) | 5 | 5 |
+| Meets all other functional requirements | 3 | 3 |
+| Meets quality attributes | 3 | 3 |
+| The system has been deployed to a Docker container running in an EC2 instance on AWS. | 10 | 10 |
+| System design seems reasonable for the problem | 3 | 3 |
+| Design is well documented in the README.md | 3 | 3 |
+| README contains installation and usage instructions | 3 | 3 |
+| README shows evidence of tests | 3 | 3 |
+| Has automated tests | 3 | 3 |
+| Repository can be cloned and executed | 3 | 3 |
+| **Subtotal Design** | **44** | **44** |
+
+| Summary | Points | Evaluation |
+| :--- | :---: | :---: |
+| **Total** | **51** | **51** |
+| **Final Grade** | **5** | **5** |
+
+
