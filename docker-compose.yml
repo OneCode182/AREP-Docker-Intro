@@ -1,0 +1,26 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web
+    environment:
+      PORT: '6000'
+    ports:
+      - '8087:6000'
+
+  # Optional Part 2 placeholder: MongoDB is included for assignment intent,
+  # but the app does not depend on it until integration is added.
+  db:
+    image: mongo:3.6.1
+    container_name: db
+    command: mongod
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+
+volumes:
+  mongodb:
+  mongodb_config:

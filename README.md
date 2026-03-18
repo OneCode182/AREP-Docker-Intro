@@ -5,7 +5,7 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
-> A project focused on web application modularization; **Part 1 is implemented** (Spring REST service), while Docker containerization and AWS EC2 deployment are pending later parts.
+> A project focused on web application modularization; **Part 1 and Part 2 are implemented** (Spring REST service + Docker packaging/execution), while **Part 3 and Part 4 (AWS EC2)** remain pending.
 
 ---
 
@@ -29,7 +29,7 @@
 
 ## Overview
 
-This repository holds a modular web application built from scratch to support concurrent HTTP requests. The current implemented scope is **Part 1** (REST endpoint + tests + dependency copy); containerization with **Docker**, orchestration with **Docker Compose**, and **AWS EC2** deployment remain planned for later parts. Current evidence includes `GET /greeting` and `GET /hello`, `PORT` fallback to `5000`, copied jars in `target/dependency`, and passing tests.
+This repository holds a modular web application built from scratch to support concurrent HTTP requests. The current implemented scope is **Part 1** (REST endpoint + tests + dependency copy) and **Part 2** (Dockerfile image build, standalone containers, and Docker Compose execution). **Part 3** and **Part 4 (AWS EC2)** remain planned for later phases. Current evidence includes `GET /greeting` and `GET /hello`, `PORT` fallback to `5000`, copied jars in `target/dependency`, successful image build, standalone checks on ports `34000/34001/34002`, and compose web check on port `8087`.
 
 This practice reinforces concepts of virtualized micro-frameworks and graceful shutdowns.
 
@@ -37,7 +37,7 @@ This practice reinforces concepts of virtualized micro-frameworks and graceful s
 
 ## Architecture
 
-The project currently consists of a Spring Boot REST service exposing HTTP endpoints. Docker packaging and cloud deployment are planned for later parts.
+The project currently consists of a Spring Boot REST service exposing HTTP endpoints, packaged and executed in Docker (single containers and Compose). Part 3 and cloud deployment are planned for later parts.
 
 ### System Diagram
 
@@ -60,7 +60,7 @@ graph TD
 ```
 
 > [!TIP]
-> Part 1 verified behavior: `/greeting` and `/hello` respond successfully, and `PORT` falls back to `5000` when invalid/missing.
+> Part 1 and Part 2 verified behavior: `/greeting` and `/hello` respond successfully, `PORT` falls back to `5000` when invalid/missing, and Docker execution checks pass in standalone and compose modes.
 
 ---
 
@@ -70,8 +70,8 @@ graph TD
 AREP-Docker-Intro/
 ├── pom.xml
 ├── README.md
-├── docker-compose.yml (Part 2 - pending)
-├── Dockerfile (Part 2 - pending)
+├── docker-compose.yml (Part 2 - implemented)
+├── Dockerfile (Part 2 - implemented)
 ├── src/
 │   ├── main/java/...
 │   └── test/java/...
@@ -88,7 +88,7 @@ AREP-Docker-Intro/
 
 - **Java SDK 17+**
 - **Apache Maven 3+**
-- **Docker** and **Docker Compose** (required for pending later parts)
+- **Docker** and **Docker Compose**
 
 ### Local Installation
 
@@ -105,7 +105,7 @@ mvn clean package
 > [!IMPORTANT]
 > The `maven-dependency-plugin` is utilized to gather all `.jar` libraries into the `target/dependency` path (Part 1 evidence), and this also supports later Docker image creation.
 
-### Docker Execution (Part 2 - Pending)
+### Docker Execution (Part 2 - Implemented)
 
 #### 1. Build the single image
 ```bash
@@ -117,16 +117,24 @@ Start the app on isolated ports binding to `6000` internally:
 ```bash
 docker run -d -p 34000:6000 --name webapp_1 custom-docker-app
 docker run -d -p 34001:6000 --name webapp_2 custom-docker-app
+docker run -d -p 34002:6000 --name webapp_3 custom-docker-app
 ```
 
 #### 3. Run with Docker Compose
-If you prefer an automated multi-container setup (e.g., App + MongoDB):
+If you prefer an automated multi-container setup (`web` + optional placeholder `db`):
 ```bash
-docker-compose up -d
+docker compose up -d --build
+# Fallback if your environment still uses legacy command:
+docker-compose up -d --build
 ```
 
 > [!NOTE]
-> Verify your running containers by typing `docker ps` in your terminal.
+> `docker-compose.yml` follows the current Compose spec (no `version` key). The `db` service is an optional placeholder and the web app does not hard-depend on it yet.
+>
+> Validation evidence (concise):
+> - `docker build -t custom-docker-app .` ✅ image built (`sha256:68eba7232c6f...`)
+> - Standalone containers on `34000/34001/34002 -> 6000` ✅ `/hello` returns `Hello, World!`
+> - Compose stack (`web` + placeholder `db`) ✅ `http://localhost:8087/hello` returns `Hello, World!`
 
 ### AWS Deployment (Part 4 - Pending)
 
@@ -145,7 +153,8 @@ To deploy this image on an EC2 instance:
 
 - [x] **REST Endpoints**: `GET /greeting` and `GET /hello` are implemented and covered by tests.
 - [x] **Port Fallback Logic**: Uses `PORT` when valid and falls back to `5000` when missing/invalid.
-- [ ] **Dockerized Artifact**: Planned for Part 2 (pending).
+- [x] **Dockerized Artifact**: Part 2 implemented and validated (image build + standalone and compose execution).
+- [ ] **Part 3 Deliverables**: Pending.
 - [ ] **Cloud Ready**: Planned for Part 4 (pending).
 
 ---
