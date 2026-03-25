@@ -27,6 +27,8 @@ graph TD
     A -- "HTTP Request (Port 42001)" --> C
 ```
 
+https://github.com/user-attachments/assets/fb22f4fa-b62c-40fa-b3b1-4fbc9857aa2e
+
 ---
 
 ## Table of Contents
