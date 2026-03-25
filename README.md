@@ -5,49 +5,9 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
-> A project focused on web application modularization; **Part 1, Part 2, and Part 3 are implemented** (Spring REST service + Docker packaging + Registry push), while **Part 4 (AWS EC2)** remains pending.
+> A project focused on web application modularization; **Part 1, Part 2, Part 3, and Part 4 are implemented** (Spring REST service + Docker packaging + Registry push + AWS EC2 Deployment).
 
----
-
-## Table of Contents
-
-- [AREP-Docker-Intro](#arep-docker-intro)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Architecture](#architecture)
-    - [System Diagram](#system-diagram)
-  - [Project Structure](#project-structure)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Local Installation](#local-installation)
-    - [Docker Execution (Part 2 - Implemented)](#docker-execution-part-2---implemented)
-      - [1. Build the single image](#1-build-the-single-image)
-      - [2. Run standalone containers](#2-run-standalone-containers)
-      - [3. Run with Docker Compose](#3-run-with-docker-compose)
-    - [Docker Registry (Part 3 - Implemented)](#docker-registry-part-3---implemented)
-      - [1. Push Evidence](#1-push-evidence)
-    - [AWS Deployment (Part 4 - Pending)](#aws-deployment-part-4---pending)
-  - [Features](#features)
-  - [Demonstration](#demonstration)
-  - [Evaluation Rubric](#evaluation-rubric)
-  - [Author](#author)
-  - [License](#license)
-
----
-
-## Overview
-
-This repository holds a modular web application built from scratch to support concurrent HTTP requests. The current implemented scope is **Part 1** (REST endpoint + tests), **Part 2** (Docker build, containers, and Compose), and **Part 3** (Pushing the image to DockerHub). **Part 4 (AWS EC2)** remains planned for the final phase. Current evidence includes successful image build, standalone and compose checks, and the verified push to the container registry.
-
-This practice reinforces concepts of virtualized micro-frameworks and graceful web distribution.
-
----
-
-## Architecture
-
-The project currently consists of a Spring Boot REST service exposing HTTP endpoints, packaged in Docker, and pushed to a remote registry (DockerHub) for distribution. Part 4 and final cloud deployment are planned for later.
-
-### System Diagram
+## System Diagram
 
 ```mermaid
 graph TD
@@ -66,6 +26,45 @@ graph TD
     A -- "HTTP Request (Port 42000)" --> B
     A -- "HTTP Request (Port 42001)" --> C
 ```
+
+---
+
+## Table of Contents
+
+- [AREP-Docker-Intro](#arep-docker-intro)
+  - [System Diagram](#system-diagram)
+  - [Overview](#overview)
+  - [Architecture](#architecture)
+  - [Project Structure](#project-structure)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Local Installation](#local-installation)
+    - [Docker Execution (Part 2 - Implemented)](#docker-execution-part-2---implemented)
+      - [1. Build the single image](#1-build-the-single-image)
+      - [2. Run standalone containers](#2-run-standalone-containers)
+      - [3. Run with Docker Compose](#3-run-with-docker-compose)
+    - [Docker Registry (Part 3 - Implemented)](#docker-registry-part-3---implemented)
+      - [1. Push Evidence](#1-push-evidence)
+    - [AWS Deployment (Part 4 - Implemented)](#aws-deployment-part-4---implemented)
+  - [Features](#features)
+  - [Demonstration](#demonstration)
+  - [Evaluation Rubric](#evaluation-rubric)
+  - [Author](#author)
+  - [License](#license)
+
+---
+
+## Overview
+
+This repository holds a modular web application built from scratch to support concurrent HTTP requests. The current implemented scope is **Part 1** (REST endpoint + tests), **Part 2** (Docker build, containers, and Compose), **Part 3** (Pushing the image to DockerHub), and **Part 4** (Deployment to AWS EC2). All planned phases are now complete and verified. Current evidence includes successful image build, standalone and compose checks, verified push to the container registry, and live cloud execution.
+
+This practice reinforces concepts of virtualized micro-frameworks and graceful web distribution.
+
+---
+
+## Architecture
+
+The project currently consists of a Spring Boot REST service exposing HTTP endpoints, packaged in Docker, pushed to a remote registry (DockerHub), and deployed to an AWS EC2 instance. All implementation phases are now complete.
 
 > [!TIP]
 > Part 1 and Part 2 verified behavior: `/greeting` and `/hello` respond successfully, `PORT` falls back to `5000` when invalid/missing, and Docker execution checks pass in standalone and compose modes.
@@ -159,16 +158,25 @@ The image was successfully tagged and uploaded to the registry:
 > [!NOTE]
 > Tags allow version control of the container images. For this phase, we ensure the image is publicly available or accessible to our deployment environment.
 
-### AWS Deployment (Part 4 - Pending)
+### AWS Deployment (Part 4 - Implemented)
 
-To deploy this image on an EC2 instance:
-1. SSH into your Amazon Linux EC2 instance.
-2. Install docker: `sudo yum install docker` and start the service: `sudo service docker start`.
-3. Pull the image pushed to DockerHub (e.g., `docker pull <your-username>/custom-docker-app`).
-4. Run the container just as you would locally.
+The application was successfully deployed to an **AWS EC2** instance, running as a Docker container pulled from the registry.
 
-> [!WARNING]
-> You must manually open the specific TCP ports under the **Inbound Rules** of your EC2 Security Group for the web traffic to reach your Docker container.
+#### 1. Cloud Deployment Evidence
+
+The following screenshots show the application running on the remote Amazon Linux EC2 instance and the corresponding instance configuration in the AWS Console:
+
+![AWS Deployment](./resources/img/aws-deploy.png)
+![AWS EC2 Instance](./resources/img/aws-ec2.png)
+
+#### 2. Query Parameters Validation
+
+To verify the correct behavior of the REST API in the cloud, specific requests were sent using query parameters. The application processes these parameters accurately while handling concurrent requests:
+
+![AWS Query Params](./resources/img/aws-query-params.png)
+
+> [!NOTE]
+> The security group of the EC2 instance was configured to allow inbound traffic on the specific port mapping for the Docker container, ensuring public accessibility.
 
 ---
 
@@ -178,7 +186,7 @@ To deploy this image on an EC2 instance:
 - [x] **Port Fallback Logic**: Uses `PORT` when valid and falls back to `5000` when missing/invalid.
 - [x] **Dockerized Artifact**: Part 2 implemented and validated (image build + standalone and compose execution).
 - [x] **Part 3 Deliverables**: Implemented (Image pushed to DockerHub).
-- [ ] **Cloud Ready**: Planned for Part 4 (pending).
+- [x] **Cloud Ready**: Implemented (Deployed to AWS EC2).
 
 ---
 
@@ -221,7 +229,7 @@ To deploy this image on an EC2 instance:
 | The framework shuts down gracefully using a Runtime Hook activated in a thread. | 5 | 5 |
 | Meets all other functional requirements | 3 | 3 |
 | Meets quality attributes | 3 | 3 |
-| The system has been deployed to a Docker container running in an EC2 instance on AWS. | 10 | 0 (Pending Part 4) |
+| The system has been deployed to a Docker container running in an EC2 instance on AWS. | 10 | 10 |
 | System design seems reasonable for the problem | 3 | 3 |
 | Design is well documented in the README.md | 3 | 3 |
 | README contains installation and usage instructions | 3 | 3 |
