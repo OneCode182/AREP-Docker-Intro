@@ -5,39 +5,47 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
-> A project focused on web application modularization; **Part 1 and Part 2 are implemented** (Spring REST service + Docker packaging/execution), while **Part 3 and Part 4 (AWS EC2)** remain pending.
+> A project focused on web application modularization; **Part 1, Part 2, and Part 3 are implemented** (Spring REST service + Docker packaging + Registry push), while **Part 4 (AWS EC2)** remains pending.
 
 ---
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Local Installation](#local-installation)
-  - [Docker Execution](#docker-execution)
-  - [AWS Deployment](#aws-deployment)
-- [Features](#features)
-- [Demonstration](#demonstration)
-- [Evaluation Rubric](#evaluation-rubric)
-- [Author](#author)
-- [License](#license)
+- [AREP-Docker-Intro](#arep-docker-intro)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Architecture](#architecture)
+    - [System Diagram](#system-diagram)
+  - [Project Structure](#project-structure)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Local Installation](#local-installation)
+    - [Docker Execution (Part 2 - Implemented)](#docker-execution-part-2---implemented)
+      - [1. Build the single image](#1-build-the-single-image)
+      - [2. Run standalone containers](#2-run-standalone-containers)
+      - [3. Run with Docker Compose](#3-run-with-docker-compose)
+    - [Docker Registry (Part 3 - Implemented)](#docker-registry-part-3---implemented)
+      - [1. Push Evidence](#1-push-evidence)
+    - [AWS Deployment (Part 4 - Pending)](#aws-deployment-part-4---pending)
+  - [Features](#features)
+  - [Demonstration](#demonstration)
+  - [Evaluation Rubric](#evaluation-rubric)
+  - [Author](#author)
+  - [License](#license)
 
 ---
 
 ## Overview
 
-This repository holds a modular web application built from scratch to support concurrent HTTP requests. The current implemented scope is **Part 1** (REST endpoint + tests + dependency copy) and **Part 2** (Dockerfile image build, standalone containers, and Docker Compose execution). **Part 3** and **Part 4 (AWS EC2)** remain planned for later phases. Current evidence includes `GET /greeting` and `GET /hello`, `PORT` fallback to `5000`, copied jars in `target/dependency`, successful image build, standalone checks on ports `34000/34001/34002`, and compose web check on port `8087`.
+This repository holds a modular web application built from scratch to support concurrent HTTP requests. The current implemented scope is **Part 1** (REST endpoint + tests), **Part 2** (Docker build, containers, and Compose), and **Part 3** (Pushing the image to DockerHub). **Part 4 (AWS EC2)** remains planned for the final phase. Current evidence includes successful image build, standalone and compose checks, and the verified push to the container registry.
 
-This practice reinforces concepts of virtualized micro-frameworks and graceful shutdowns.
+This practice reinforces concepts of virtualized micro-frameworks and graceful web distribution.
 
 ---
 
 ## Architecture
 
-The project currently consists of a Spring Boot REST service exposing HTTP endpoints, packaged and executed in Docker (single containers and Compose). Part 3 and cloud deployment are planned for later parts.
+The project currently consists of a Spring Boot REST service exposing HTTP endpoints, packaged in Docker, and pushed to a remote registry (DockerHub) for distribution. Part 4 and final cloud deployment are planned for later.
 
 ### System Diagram
 
@@ -121,7 +129,9 @@ docker run -d -p 34002:6000 --name webapp_3 custom-docker-app
 ```
 
 #### 3. Run with Docker Compose
+
 If you prefer an automated multi-container setup (`web` + optional placeholder `db`):
+
 ```bash
 docker compose up -d --build
 # Fallback if your environment still uses legacy command:
@@ -132,9 +142,22 @@ docker-compose up -d --build
 > `docker-compose.yml` follows the current Compose spec (no `version` key). The `db` service is an optional placeholder and the web app does not hard-depend on it yet.
 >
 > Validation evidence (concise):
-> - `docker build -t custom-docker-app .` ✅ image built (`sha256:68eba7232c6f...`)
-> - Standalone containers on `34000/34001/34002 -> 6000` ✅ `/hello` returns `Hello, World!`
-> - Compose stack (`web` + placeholder `db`) ✅ `http://localhost:8087/hello` returns `Hello, World!`
+> - `docker build -t custom-docker-app .` - image built (`sha256:68eba7232c6f...`)
+> - Standalone containers on `34000/34001/34002 -> 6000` - `/hello` returns `Hello, World!`
+> - Compose stack (`web` + placeholder `db`) - `http://localhost:8087/hello` returns `Hello, World!`
+
+### Docker Registry (Part 3 - Implemented)
+
+To facilitate remote deployment and distribution, the local image was tagged and pushed to **Docker Hub**. This step ensures the application artifact is accessible from any environment (such as the AWS EC2 instance in Part 4) without requiring local source code.
+
+#### 1. Push Evidence
+
+The image was successfully tagged and uploaded to the registry:
+
+![Docker Push Evidence](./resources/img/docker-push.png)
+
+> [!NOTE]
+> Tags allow version control of the container images. For this phase, we ensure the image is publicly available or accessible to our deployment environment.
 
 ### AWS Deployment (Part 4 - Pending)
 
@@ -154,7 +177,7 @@ To deploy this image on an EC2 instance:
 - [x] **REST Endpoints**: `GET /greeting` and `GET /hello` are implemented and covered by tests.
 - [x] **Port Fallback Logic**: Uses `PORT` when valid and falls back to `5000` when missing/invalid.
 - [x] **Dockerized Artifact**: Part 2 implemented and validated (image build + standalone and compose execution).
-- [ ] **Part 3 Deliverables**: Pending.
+- [x] **Part 3 Deliverables**: Implemented (Image pushed to DockerHub).
 - [ ] **Cloud Ready**: Planned for Part 4 (pending).
 
 ---
@@ -170,6 +193,9 @@ To deploy this image on an EC2 instance:
 ---
 
 ## Evaluation Rubric
+
+<details>
+<summary> Click to expand detailed evaluation rubric</summary>
 
 | General Information | Detail |
 | :--- | :--- |
@@ -208,6 +234,8 @@ To deploy this image on an EC2 instance:
 | :--- | :---: | :---: |
 | **Total** | **51** | **TBD** |
 | **Final Grade** | **5** | **TBD** |
+
+</details>
 
 ---
 
