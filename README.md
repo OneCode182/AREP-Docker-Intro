@@ -1,9 +1,10 @@
 # AREP-Docker-Intro
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Maven](https://img.shields.io/badge/apache_maven-%23C71A36.svg?style=for-the-badge&logo=apachemaven&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Java](https://img.shields.io/badge/Java-17+-ED8B00?logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Apache_Maven-3.x-C71A36?logo=apachemaven&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-Cloud-FF9900?logo=amazon-aws&logoColor=white)
+![EC2](https://img.shields.io/badge/Amazon_EC2-Deploy-FF4F8B?logo=amazonec2&logoColor=white)
 
 > A project focused on web application modularization; **Part 1, Part 2, Part 3, and Part 4 are implemented** (Spring REST service + Docker packaging + Registry push + AWS EC2 Deployment).
 
@@ -35,6 +36,7 @@ https://github.com/user-attachments/assets/fb22f4fa-b62c-40fa-b3b1-4fbc9857aa2e
 
 - [AREP-Docker-Intro](#arep-docker-intro)
   - [System Diagram](#system-diagram)
+  - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Architecture](#architecture)
   - [Project Structure](#project-structure)
@@ -48,6 +50,8 @@ https://github.com/user-attachments/assets/fb22f4fa-b62c-40fa-b3b1-4fbc9857aa2e
     - [Docker Registry (Part 3 - Implemented)](#docker-registry-part-3---implemented)
       - [1. Push Evidence](#1-push-evidence)
     - [AWS Deployment (Part 4 - Implemented)](#aws-deployment-part-4---implemented)
+      - [1. Cloud Deployment Evidence](#1-cloud-deployment-evidence)
+      - [2. Query Parameters Validation](#2-query-parameters-validation)
   - [Features](#features)
   - [Demonstration](#demonstration)
   - [Evaluation Rubric](#evaluation-rubric)
