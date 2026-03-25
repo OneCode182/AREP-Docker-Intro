@@ -53,7 +53,6 @@ https://github.com/user-attachments/assets/fb22f4fa-b62c-40fa-b3b1-4fbc9857aa2e
       - [1. Cloud Deployment Evidence](#1-cloud-deployment-evidence)
       - [2. Query Parameters Validation](#2-query-parameters-validation)
   - [Features](#features)
-  - [Demonstration](#demonstration)
   - [Evaluation Rubric](#evaluation-rubric)
   - [Author](#author)
   - [License](#license)
@@ -193,16 +192,6 @@ To verify the correct behavior of the REST API in the cloud, specific requests w
 - [x] **Dockerized Artifact**: Part 2 implemented and validated (image build + standalone and compose execution).
 - [x] **Part 3 Deliverables**: Implemented (Image pushed to DockerHub).
 - [x] **Cloud Ready**: Implemented (Deployed to AWS EC2).
-
----
-
-## Demonstration
-
-> [!TIP]
-> **Video / Screenshots Placeholder**
-> Add visual proof of the application running locally and in the AWS EC2 cloud infrastructure.
-
-*(Insert video link or screenshots of AWS tests here)*
 
 ---
 
